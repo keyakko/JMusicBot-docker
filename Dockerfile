@@ -20,10 +20,11 @@ RUN wget -O /workdir/config.txt \
 # https://docs.docker.jp/engine/reference/builder.html#arg
 ARG TOKEN
 ARG OWNER_ID
-RUN sed -e "s/prefix = \".*\"/prefix = \"!\"/" /workdir/config.txt && \
-    sed -e 's/^token = .*$/token = '"$TOKEN"'/' /workdir/config.txt && \
-    sed -e 's/owner = .*$/owner = '"$OWNER_ID"'/' /workdir/config.txt && \
-    sed -e "s/stopnousers = .*$/stopnousers = true/" /workdir/config.txt
+RUN sed -e "s/prefix = \".*\"/prefix = \"!\"/" /workdir/config.txt | \
+    sed -e 's/^token = .*$/token = '"$TOKEN"'/' | \
+    sed -e 's/owner = .*$/owner = '"$OWNER_ID"'/' | \
+    sed -e "s/stopnousers = .*$/stopnousers = true/" | \
+    tee /workdir/config.txt
 
 
 # MusicBotしかこのコンテナで動かす予定はないから、ひとまずENTRYPOINTで
